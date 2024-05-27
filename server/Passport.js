@@ -7,10 +7,9 @@ const { secret } = require('./models/ConfigKey');
 passport.use(
   new GoogleStrategy(
     {
-      clientID:
-        '739884039570-9dm1ci158kn2q83b0iep1pmm4psmlus2.apps.googleusercontent.com',
-      clientSecret: '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',
-      callbackURL: 'http://localhost:2000/auth/google/callback',
+      clientID: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      callbackURL: 'http://localhost:4500/auth/google/callback',
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
