@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const connectToDatabase = require('./db');
 const jwt = require('jsonwebtoken');
-const { secret } = require('../models/ConfigKey');
+const { secret } = require('./models/ConfigKey');
 
 const generateAuthToken = (id, username) => {
   const payload = {

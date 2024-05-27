@@ -39,19 +39,20 @@ const mimeTypes = {
   '.wasm': 'application/wasm',
 };
 
-app.use(express.static(join(__dirname, '..', 'public')));
+app.use(express.static(join(__dirname, 'public')));
 
 app.use(express.json());
 
-app.use(session({
-  secret: 'your_session_secret',
-  resave: false,
-  saveUninitialized: true
-}));
+app.use(
+  session({
+    secret: 'your_session_secret',
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 app.post('/generate-passwords', generatePasswords);
 app.post('/generate-password', generatePassword);
@@ -64,7 +65,7 @@ app.use('/auth', require('./authRoutes'));
 //================================================================
 
 app.get('*', (req, res) => {
-  const filePath = join(__dirname, '..', 'public', req.url);
+  const filePath = join(__dirname, 'public', req.url);
   const ext = extname(filePath).toLowerCase();
   const contentType = mimeTypes[ext] || 'application/octet-stream';
 
