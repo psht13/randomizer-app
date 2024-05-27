@@ -10,7 +10,7 @@ passport.use(
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
       callbackURL:
-        'https://randomizer-app-production.up.railway.app//auth/google/callback',
+        'https://randomizer-app-production.up.railway.app/auth/google/callback',
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
