@@ -4,6 +4,7 @@ const connectToDatabase = require('./db');
 const passport = require('passport');
 const session = require('express-session');
 require('./Passport');
+require('dotenv').config();
 
 const { readFile } = require('fs');
 const {
@@ -18,9 +19,10 @@ const {
 
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const { env } = require('process');
 
 const app = express();
-const port = 2000;
+const port = process.env.PORT;
 
 const mimeTypes = {
   '.html': 'text/html',
@@ -84,7 +86,6 @@ app.get('*', (req, res) => {
 });
 
 connectToDatabase();
-
 //===============================================================
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`);

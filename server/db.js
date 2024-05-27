@@ -1,6 +1,7 @@
+require('dotenv').config();
 const { MongoClient } = require('mongodb');
 
-const mongoURI = 'mongodb+srv://lapster20044:P%40ssw0rd@cluster0.kkmjyfj.mongodb.net/dataSite?retryWrites=true&w=majority&appName=Cluster0';
+const mongoURI = process.env.DB_CONNECTION;
 
 const client = new MongoClient(mongoURI);
 
