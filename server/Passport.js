@@ -10,8 +10,7 @@ passport.use(
       clientID:
         '739884039570-9dm1ci158kn2q83b0iep1pmm4psmlus2.apps.googleusercontent.com',
       clientSecret: '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',
-      callbackURL:
-        'https://randomizer-app-production.up.railway.app/auth/google/callback',
+      callbackURL: 'http://localhost:2000/auth/google/callback',
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
