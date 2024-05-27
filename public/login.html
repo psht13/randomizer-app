@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+</head>
+<body>
+  <div class="login-container">
+    <h1>Login</h1>
+    <form id="loginForm" onsubmit="event.preventDefault(); Auth.login();">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit">Login</button>
+      <div id="result"></div>
+    </form>
+    <a href="/auth/google" style="text-decoration: none;">
+      <button style="background-color: #ffffff; border: none; padding: 10px; border-radius: 5px; cursor: pointer; display: inline-flex; align-items: center;">
+        <img src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg" alt="Google Logo" style="width: 24px; height: 24px; margin-right: 10px;">
+        <span style="font-size: 16px; color: #757575;">Login with Google</span>
+      </button>
+    </a>
+  </div>
+  <script src="./scripts/script.js"></script>
+</body>
+</html>

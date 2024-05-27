@@ -1,0 +1,140 @@
+body {
+  font-family: 'Raleway', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 400px;
+  margin: 50px auto;
+  text-align: center;
+  border: 1px solid #cdcdcd;
+  width: 35%;
+  padding-bottom: 10px;
+}
+
+/*================================================================*/
+/* Стилі результату  */
+.previous-requests-container {
+  padding: 0 16px;
+  overflow: hidden;
+}
+
+.requests-wrapper {
+  display: flex;
+  height: 18px;
+  flex-wrap: wrap;
+  max-width: 368px;
+  overflow: hidden;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  gap: 8px;
+}
+
+.requests-wrapper > :first-child {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.previous-text {
+  padding: 10px;
+  margin: 0;
+  border-top: 1px solid #cdcdcd;
+}
+
+#result {
+  margin-bottom: 10px;
+}
+/*================================================================*/
+
+.container h1 {
+  background-color: #cdcdcd;
+  margin: 0;
+}
+
+input[type='number'],
+button {
+  margin-top: 10px;
+}
+
+button {
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.navigation {
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+  height: 5vh;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.nav-container {
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 5vh;
+}
+
+.nav-container a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
+  border-bottom: 1px solid transparent;
+  transition: border-bottom-color 0.3s;
+}
+
+.nav-container a:hover {
+  border-bottom-color: #ddd;
+}
+
+.main-links {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-top: 10px;
+  height: 100%;
+}
+
+.main-links a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 13px;
+  transition: color 0.3s, border-bottom-color 0.3s;
+}
+
+.auth-links {
+  display: inline-flex;
+  align-items: center;
+}
+
+.auth-links a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 8px;
+  font-size: 0.7em;
+  transition: color 0.3s, border-bottom-color 0.3s;
+}
+
+.auth-links {
+  margin-left: auto;
+}
+
+.main-links a:hover,
+.auth-links a:hover {
+  color: #ddd;
+  border-bottom-color: #ddd;
+}

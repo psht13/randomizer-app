@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Вибір випадкового слова</title>
+  <link rel="stylesheet" href="./styles/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <nav class="navigation">
+    <div class="nav-container">
+      <div class="main-links">
+        <a href="index.html">Випадкове число</a>
+        <a href="index1.html">Генерація послідовності</a>
+        <a href="index2.html">Вибір слова</a>
+        <a href="index3.html">Генерація паролю</a>
+        <a href="index4.html">Генерація набору паролів</a>
+      </div>
+      <div class="auth-links">
+        <a href="#">Зареєструватися</a>
+        <a href="#">Авторизуватися</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>Вибір випадкового слова</h1>
+    <div>
+      <label for="text">Текст:</label>
+      <textarea id="text" rows="4" cols="50"></textarea>
+    </div>
+    <button onclick="Random.getRandomWord()">Вибрати випадкове слово</button>
+    <div id="result"></div>
+    <div id="requests" class="previous-requests-container">
+      <p class="previous-text">Попередні запити: </p>
+      <div class="requests-wrapper word-requests">
+      </div>
+    </div>
+  </div>
+
+  <script src="./scripts/script.js"></script>
+</body>
+
+</html>

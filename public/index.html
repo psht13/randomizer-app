@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Генератор випадкових чисел</title>
+  <link rel="stylesheet" href="./styles/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <nav class="navigation">
+    <div class="nav-container">
+      <div class="main-links">
+        <a href="./index.html">Випадкове число</a>
+        <a href="./index1.html">Генерація послідовності</a>
+        <a href="./index2.html">Вибір слова</a>
+        <a href="./index3.html">Генерація паролю</a>
+        <a href="./index4.html">Генерація набору паролів</a>
+      </div>
+      <div class="auth-links">
+        <a href="#">Зареєструватися</a>
+        <a href="#">Авторизуватися</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>Генератор випадкових чисел</h1>
+    <div>
+      <label for="min">min:</label>
+      <input type="number" id="min" min="0" />
+    </div>
+    <div>
+      <label for="max">max:</label>
+      <input type="number" id="max" min="0" />
+    </div>
+    <button onclick="Random.getRandomNumber()">Згенерувати</button>
+    <div id="result"></div>
+    <div id="requests" class="previous-requests-container">
+      <p class="previous-text">Попередні запити: </p>
+      <div class="requests-wrapper random-requests">
+      </div>
+    </div>
+  </div>
+
+  <script src="./scripts/script.js"></script>
+</body>
+
+</html>
