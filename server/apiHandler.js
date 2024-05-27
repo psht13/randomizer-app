@@ -2,6 +2,32 @@ const bcrypt = require('bcryptjs');
 const connectToDatabase = require('./db');
 const jwt = require('jsonwebtoken');
 const { secret } = require('./models/ConfigKey');
+require('dotenv').config();
+
+class LogisticMapRandom {
+  constructor(seed, r) {
+    this.x = seed; // Початкове значення (0 < seed < 1)
+    this.r = r; // Параметр р
+  }
+
+  next() {
+    this.x = this.r * this.x * (1 - this.x);
+    return this.x;
+  }
+
+  // Функція для отримання випадкового числа в діапазоні [0, 1)
+  random() {
+    return this.next();
+  }
+
+  // Функція для отримання випадкового числа з плаваючою комою в діапазоні [min, max)
+  randomFloat(min, max) {
+    return this.random() * (max - min) + min;
+  }
+}
+
+//================================================================
+//================================================================
 
 const generateAuthToken = (id, username) => {
   const payload = {
@@ -96,7 +122,13 @@ const random = (req, res) => {
       .status(400)
       .send('Мінімальне значення повинно бути менше за максимальне.');
   } else {
-    const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+    const gen = new LogisticMapRandom(
+      Math.random(),
+      Math.random() * (4 - 3.57) + 3.57
+    );
+
+    console.log(gen);
+    const randomNumber = Math.floor(gen.random() * (max - min + 1) + min);
     res.send('' + randomNumber);
   }
 };
