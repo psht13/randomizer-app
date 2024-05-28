@@ -88,7 +88,7 @@ const sequence = (req, res) => {
   } else {
     let result = '';
     for (let i = 0; i < quantity; i++) {
-      result += Math.floor(getCryptoRandom() * (max - min + 1)) + min + ', ';
+      result += Math.floor(getCryptoRandom() * (max - min + 1)) + min + ' ';
     }
     res.send(result);
   }
