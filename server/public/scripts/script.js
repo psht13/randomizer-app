@@ -353,10 +353,10 @@ class Auth {
   }
 
   static async login() {
-    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
-    if (!username || !password) {
+    if (!email || !password) {
       document.getElementById('result').innerText =
         'Будь ласка, заповніть всі поля.';
       return;
@@ -368,14 +368,14 @@ class Auth {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
         localStorage.setItem('token', data.token);
-        localStorage.setItem('username', username);
+        localStorage.setItem('username', data.username);
         document.getElementById('result').innerText = 'Вхід успішний';
         window.location.href = '/index.html';
       } else {

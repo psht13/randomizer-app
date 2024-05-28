@@ -17,5 +17,20 @@ router.get('/google/callback',
               </script>`);
   }
 );
+router.get('/facebook',
+  passport.authenticate('facebook', { scope: ['email'] })
+);
+
+router.get('/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/login.html' }),
+  (req, res) => {
+    const { token, username } = req.user;
+    res.send(`<script>
+                localStorage.setItem('token', '${token}');
+                localStorage.setItem('username', '${username}');
+                window.location.href = '/index.html';
+              </script>`);
+  }
+);
 
 module.exports = router;
