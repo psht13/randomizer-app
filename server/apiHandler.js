@@ -178,19 +178,19 @@ const login = async (req, res) => {
   try {
     const db = await connectToDatabase();
     const usersCollection = db.collection('users');
-    const { username, password } = req.body;
-    const candidateU = await usersCollection.findOne({ username });
+    const { email, password } = req.body;
+    const candidateU = await usersCollection.findOne({ email });
     if (!candidateU) {
       return res
         .status(400)
-        .json({ message: 'Користувач ${username} не знайдений' });
+        .json({ message: 'Користувач не знайдений' });
     }
     const validPassword = bcrypt.compareSync(password, candidateU.password);
     if (!validPassword) {
       return res.status(400).json({ message: 'Не правильний пароль' });
     }
     const token = generateAuthToken(candidateU._id, candidateU.username);
-    return res.json({ token: token });
+    return res.json({ token: token, username: candidateU.username });
   } catch (e) {
     console.log(e);
     res.status(400).json({ message: 'Login error' });
