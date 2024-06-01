@@ -409,6 +409,11 @@ class Auth {
     localStorage.removeItem('username');
     window.location.href = '/index.html';
   }
+
+  static decodeToken(token) {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload;
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -417,9 +422,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
   const token = params.get('token');
   if (token) {
-    const username = atob(token.split('.')[1]); // Розшифровуємо токен, щоб отримати ім'я користувача
+    const payload = Auth.decodeToken(token);
     localStorage.setItem('token', token);
-    localStorage.setItem('username', JSON.parse(username).username);
-    window.location.href = '/index.html'; // Редирект на головну сторінку після успішного входу
+    localStorage.setItem('username', payload.username);
+    localStorage.setItem('userId', payload.id);
+    window.location.href = '/index.html';
   }
 });
