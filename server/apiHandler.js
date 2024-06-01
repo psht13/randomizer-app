@@ -2,6 +2,14 @@ const bcrypt = require('bcryptjs');
 const connectToDatabase = require('./db');
 const jwt = require('jsonwebtoken');
 const { secret } = require('./models/ConfigKey');
+require('dotenv').config();
+const crypto = require('crypto');
+
+function getCryptoRandom() {
+  const buffer = new Uint32Array(1);
+  crypto.randomFillSync(buffer);
+  return buffer[0] / (0xffffffff + 1);
+}
 
 const generateAuthToken = (id, username) => {
   const payload = {
@@ -25,8 +33,9 @@ const generatePasswords = (req, res) => {
   } else {
     for (let j = 0; j < quantity; j++) {
       let password = '';
+
       for (let i = 0; i < length; i++) {
-        let randomIndex = Math.floor(Math.random() * charset.length);
+        let randomIndex = Math.floor(getCryptoRandom() * charset.length);
         password += charset[randomIndex];
       }
       passwordSet.push(password);
@@ -47,7 +56,7 @@ const generatePassword = (req, res) => {
   } else {
     let password = '';
     for (let i = 0; i < length; i++) {
-      let randomIndex = Math.floor(Math.random() * charset.length);
+      let randomIndex = Math.floor(getCryptoRandom() * charset.length);
       password += charset[randomIndex];
     }
     res.json({ password: password });
@@ -61,7 +70,7 @@ const randomWord = (req, res) => {
   if (words.length === 0) {
     res.status(400).json({ error: 'Будь ласка, введіть текст.' });
   } else {
-    const randomIndex = Math.floor(Math.random() * words.length);
+    const randomIndex = Math.floor(getCryptoRandom() * words.length);
     const randomWord = words[randomIndex];
     res.json({ randomWord: randomWord });
   }
@@ -79,7 +88,7 @@ const sequence = (req, res) => {
   } else {
     let result = '';
     for (let i = 0; i < quantity; i++) {
-      result += Math.floor(Math.random() * (max - min + 1)) + min + ', ';
+      result += Math.floor(getCryptoRandom() * (max - min + 1)) + min + ' ';
     }
     res.send(result);
   }
@@ -96,7 +105,7 @@ const random = (req, res) => {
       .status(400)
       .send('Мінімальне значення повинно бути менше за максимальне.');
   } else {
-    const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+    const randomNumber = Math.floor(getCryptoRandom() * (max - min + 1) + min);
     res.send('' + randomNumber);
   }
 };
@@ -149,9 +158,7 @@ const login = async (req, res) => {
     const { email, password } = req.body;
     const candidateU = await usersCollection.findOne({ email });
     if (!candidateU) {
-      return res
-        .status(400)
-        .json({ message: 'Користувач не знайдений' });
+      return res.status(400).json({ message: 'Користувач не знайдений' });
     }
     const validPassword = bcrypt.compareSync(password, candidateU.password);
     if (!validPassword) {

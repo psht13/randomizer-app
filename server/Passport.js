@@ -4,6 +4,7 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const jwt = require('jsonwebtoken');
 const connectToDatabase = require('./db'); // ваш файл для підключення до бази даних
 const { secret } = require('./models/ConfigKey');
+require('dotenv').config();
 
 //Google Strategy
 passport.use(
@@ -22,8 +23,10 @@ passport.use(
         let user = await usersCollection.findOne({ googleId: profile.id });
 
         if (!user) {
-          user = await usersCollection.findOne({ email: profile.emails[0].value });
-          
+          user = await usersCollection.findOne({
+            email: profile.emails[0].value,
+          });
+
           if (!user) {
             const newUser = {
               googleId: profile.id,
@@ -59,55 +62,58 @@ passport.use(
 );
 
 //Facebook Strategy
-passport.use(new FacebookStrategy({
-  clientID: '848948920606013',
-  clientSecret: '655991fb7075de5634c8879911fdc6d9',
-  callbackURL: "https://randomizer-app-production.up.railway.app/auth/facebook/callback",
-  profileFields: ['id', 'displayName', 'emails']
-},
-async (accessToken, refreshToken, profile, done) => {
-  try {
-    const db = await connectToDatabase();
-    const usersCollection = db.collection('users');
-    
-    let user = await usersCollection.findOne({ facebookId: profile.id });
-    
-    if (!user) {
-      user = await usersCollection.findOne({ email: profile.emails[0].value });
+passport.use(
+  new FacebookStrategy(
+    {
+      clientID: process.env.CLIENT_ID_F,
+      clientSecret: process.env.CLIENT_SECRET_F,
+      callbackURL:
+        'https://randomizer-app-production.up.railway.app/auth/facebook/callback',
+      profileFields: ['id', 'displayName', 'emails'],
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        const db = await connectToDatabase();
+        const usersCollection = db.collection('users');
 
-      if (!user) {
-        const newUser = {
-          facebookId: profile.id,
-          username: profile.displayName,
-          email: profile.emails[0].value,
+        let user = await usersCollection.findOne({ facebookId: profile.id });
+
+        if (!user) {
+          user = await usersCollection.findOne({
+            email: profile.emails[0].value,
+          });
+
+          if (!user) {
+            const newUser = {
+              facebookId: profile.id,
+              username: profile.displayName,
+              email: profile.emails[0].value,
+            };
+            const result = await usersCollection.insertOne(newUser);
+            user = { ...newUser, _id: result.insertedId };
+          } else {
+            // Якщо користувач знайдений за email, оновимо його facebookId
+            await usersCollection.updateOne(
+              { email: profile.emails[0].value },
+              { $set: { facebookId: profile.id } }
+            );
+            user.facebookId = profile.id;
+          }
+        }
+
+        const tokenPayload = {
+          id: user._id,
+          username: user.username,
         };
-        const result = await usersCollection.insertOne(newUser);
-        user = { ...newUser, _id: result.insertedId };
-      } else {
-        // Якщо користувач знайдений за email, оновимо його facebookId
-        await usersCollection.updateOne(
-          { email: profile.emails[0].value },
-          { $set: { facebookId: profile.id } }
-        );
-        user.facebookId = profile.id;
+        const token = jwt.sign(tokenPayload, secret, { expiresIn: '24h' });
+
+        done(null, { ...user, token });
+      } catch (error) {
+        done(error);
       }
     }
-    
-    const tokenPayload = {
-      id: user._id,
-      username: user.username,
-    };
-    const token = jwt.sign(
-      tokenPayload,
-      secret,
-      { expiresIn: '24h' }
-    );
-
-    done(null, { ...user, token });
-  } catch (error) {
-    done(error);
-  }
-}));
+  )
+);
 
 passport.serializeUser((user, done) => {
   done(null, user);

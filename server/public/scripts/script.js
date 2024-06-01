@@ -111,12 +111,9 @@ class Random {
       fetch(`/sequence?quantity=${quantity}&min=${min}&max=${max}`)
         .then(response => response.text())
         .then(data => {
-          result.innerHTML =
-            'Згенерована послідовність: <br>' + data.slice(0, -2) + ';';
+          result.innerHTML = 'Згенерована послідовність: <br>' + data;
 
-          const markup = `<div class="request">${
-            data.slice(0, -2) + ';'
-          }</div>`;
+          const markup = `<div class="request">${data}</div>`;
           requestWrapper.insertAdjacentHTML('afterbegin', markup);
 
           const savedRequests =
