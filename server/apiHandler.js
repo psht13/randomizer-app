@@ -149,7 +149,7 @@ const generatePasswords = async (req, res) => {
     if (userId) {
       try {
         if (!ObjectId.isValid(userId)) {
-          res.send(result);
+          res.json({ passwordSet: passwordSet });
           return;
         }
         const db = await connectToDatabase();
@@ -198,7 +198,7 @@ const generatePassword = async (req, res) => {
     if (userId) {
       try {
         if (!ObjectId.isValid(userId)) {
-          res.send(result);
+          res.json({ password: password });
           return;
         }
 
@@ -338,7 +338,7 @@ const random = async (req, res) => {
     if (userId) {
       try {
         if (!ObjectId.isValid(userId)) {
-          res.send(result);
+          res.send('' + randomNumber);
           return;
         }
         const db = await connectToDatabase();
