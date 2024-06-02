@@ -1,3 +1,4 @@
+let isQueryVisible = false;
 class Random {
   static loadPreviousRandomRequests() {
     const requestWrapper = document.querySelector('.random-requests');
@@ -58,6 +59,7 @@ class Random {
     let min = parseInt(document.getElementById('min').value);
     let max = parseInt(document.getElementById('max').value);
     const request = document.querySelector('.random-requests');
+    const userId = localStorage.getItem('user_id');
     if (isNaN(min) || isNaN(max)) {
       document.getElementById('result').innerText =
         'Будь ласка, введіть числа.';
@@ -65,11 +67,11 @@ class Random {
       document.getElementById('result').innerText =
         'Мінімальне значення повинно бути менше за максимальне.';
     } else {
-      fetch(`/random?min=${min}&max=${max}`)
+      fetch(`/random?min=${min}&max=${max}&user_id=${userId}`)
         .then(response => response.text())
         .then(data => {
           document.getElementById('result').innerText =
-            'Випадкове число: ' + data;
+            data;
           const markup = `<div class="request">${data}</div>`;
           request.insertAdjacentHTML('afterbegin', markup);
 
@@ -99,31 +101,28 @@ class Random {
     let max = parseInt(document.getElementById('max').value);
     let result = document.getElementById('result');
     const requestWrapper = document.querySelector('.sequence-requests');
+    const userId = localStorage.getItem('user_id');
 
     if (isNaN(min) || isNaN(max)) {
-      result.innerHTML =
-        'Будь ласка, введіть коректні значення для min та max.';
+      result.innerHTML = 'Будь ласка, введіть коректні значення для min та max.';
     } else if (min >= max) {
       result.innerHTML = 'Значення max повинно бути більшим за значення min.';
     } else if (quantity < 1) {
       result.innerHTML = 'Значення кількості має бути більшим за одиницю.';
     } else {
-      fetch(`/sequence?quantity=${quantity}&min=${min}&max=${max}`)
+      fetch(`/sequence?quantity=${quantity}&min=${min}&max=${max}&user_id=${userId}`) // Append user_id to the URL
         .then(response => response.text())
         .then(data => {
-          result.innerHTML = 'Згенерована послідовність: <br>' + data;
+          result.innerHTML =
+            'Згенерована послідовність: <br>' + data.slice(0, -2);
 
-          const markup = `<div class="request">${data}</div>`;
+          const markup = `<div class="request">${data.slice(0, -2) + ';'}</div>`;
           requestWrapper.insertAdjacentHTML('afterbegin', markup);
 
-          const savedRequests =
-            JSON.parse(localStorage.getItem('sequence-requests')) || [];
+          const savedRequests = JSON.parse(localStorage.getItem('sequence-requests')) || [];
           savedRequests.push(data);
           savedRequests.splice(0, savedRequests.length - 20);
-          localStorage.setItem(
-            'sequence-requests',
-            JSON.stringify(savedRequests)
-          );
+          localStorage.setItem('sequence-requests', JSON.stringify(savedRequests));
         })
         .catch(error => {
           console.error('Error:', error);
@@ -138,13 +137,14 @@ class Random {
     let text = document.getElementById('text').value;
     const requestWrapper = document.querySelector('.word-requests');
     let result = document.getElementById('result');
+    const userId = localStorage.getItem('user_id');
 
-    fetch('/random-word', {
+    fetch(`/random-word?user_id=${userId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ text: text }),
+      body: JSON.stringify({ text: text })
     })
       .then(response => {
         if (!response.ok) {
@@ -182,11 +182,12 @@ class Random {
     let length = parseInt(document.getElementById('length').value);
     const requestWrapper = document.querySelector('.passwd-requests');
     let result = document.getElementById('result');
+    const userId = localStorage.getItem('user_id');
 
     if (isNaN(length) || length <= 0) {
       result.innerHTML = 'Будь ласка, введіть коректну довжину пароля.';
     } else {
-      fetch('/generate-password', {
+      fetch(`/generate-password?user_id=${userId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -236,12 +237,13 @@ class Random {
     let length = parseInt(document.getElementById('length').value);
     const requestWrapper = document.querySelector('.passwd-set-requests');
     let result = document.getElementById('result');
+    const userId = localStorage.getItem('user_id');
 
     if (isNaN(quantity) || isNaN(length) || quantity <= 0 || length <= 0) {
       result.innerHTML =
         'Будь ласка, введіть коректні значення для кількості та довжини паролів.';
     } else {
-      fetch('/generate-passwords', {
+      fetch(`/generate-passwords?user_id=${userId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -350,10 +352,10 @@ class Auth {
   }
 
   static async login() {
-    const email = document.getElementById('email').value;
+    const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    if (!email || !password) {
+    if (!username || !password) {
       document.getElementById('result').innerText =
         'Будь ласка, заповніть всі поля.';
       return;
@@ -365,14 +367,15 @@ class Auth {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username, password }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
         localStorage.setItem('token', data.token);
-        localStorage.setItem('username', data.username);
+        localStorage.setItem('username', username);
+        localStorage.setItem('user_id', data.user_id);
         document.getElementById('result').innerText = 'Вхід успішний';
         window.location.href = '/index.html';
       } else {
@@ -390,13 +393,13 @@ class Auth {
     const authLinks = document.querySelector('.auth-links');
     if (token) {
       authLinks.innerHTML = `
-        <span>Привіт, ${username}</span>
-        <a href="#" onclick="Auth.logout()">Вийти</a>
+        <a href="./table.html"  class="span-username">Привіт, ${username}</a>
+        <a href="#" onclick="Auth.logout()"  class="exit">Вийти</a>
       `;
     } else {
       authLinks.innerHTML = `
-        <a href="./register.html">Зареєструватися</a>
-        <a href="./login.html">Авторизуватися</a>
+        <a href="./register.html" class="registration">Зареєструватися</a>
+        <a href="./login.html" class="authorization">Авторизуватися</a>
       `;
     }
   }
@@ -404,12 +407,9 @@ class Auth {
   static logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('queryHistoryData');
     window.location.href = '/index.html';
-  }
-
-  static decodeToken(token) {
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    return payload;
   }
 }
 
@@ -419,10 +419,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
   const token = params.get('token');
   if (token) {
-    const payload = Auth.decodeToken(token);
+    const username = atob(token.split('.')[1]); // Розшифровуємо токен, щоб отримати ім'я користувача
     localStorage.setItem('token', token);
-    localStorage.setItem('username', payload.username);
-    localStorage.setItem('userId', payload.id);
-    window.location.href = '/index.html';
+    localStorage.setItem('username', JSON.parse(username).username);
+    window.location.href = '/index.html'; // Редирект на головну сторінку після успішного входу
   }
 });
+
+function goToPage(selectObject) {
+  var url = selectObject.value;
+  if (url) {
+      window.location.href = url;
+  }
+}

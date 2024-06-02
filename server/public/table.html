@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script src="./scripts/script.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Генератор випадкових чисел</title>
+  <link rel="stylesheet" href="./styles/table.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div id="container">
+    <div id="controls">
+      <div id="random-query-display">
+        <h2>Random Query</h2>
+        <button id="random-query-button" onclick="getRandomQueryFromHistory()">Show Random Query</button>
+	    <div id="random-query-display-result"></div>
+      </div>
+      <div id="statistics">
+        <h2>Statistics</h2>
+        <button onclick="getStatistics()">Show Statistics</button>
+	    <div id="statistics-result"></div>
+      </div>
+      <div id="history">
+        <h2>Query History</h2>
+	    <div id="history-result"></div>
+        <div id="filters">
+            <label for="queryTypeFilter">Query Type:</label>
+            <select id="queryTypeFilter">
+              <option value="all">All</option>
+              <option value="sequence">Sequence</option>
+              <option value="random">Random-Number</option>
+              <option value="randomWord">Random Word</option>
+              <option value="generatePassword">Password generation</option>
+              <option value="generatePasswords">Passwords generation</option>
+            </select>
+            <label for="dateFilter">Date:</label>
+            <select id="dateFilter">
+              <option value="all">All Time</option>
+              <option value="lastHour">Last Hour</option>
+              <option value="lastDay">Last Day</option>
+              <option value="lastWeek">Last Week</option>
+            </select>
+            <div class="data-container" id="data-container"></div>
+      </div>
+  </div>
+  <script src="./scripts/client.js"></script>
+</body>
+</html>

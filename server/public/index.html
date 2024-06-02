@@ -6,45 +6,77 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Генератор випадкових чисел</title>
   <link rel="stylesheet" href="./styles/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
-  <nav class="navigation">
-    <div class="nav-container">
-      <div class="main-links">
-        <a href="./index.html">Випадкове число</a>
-        <a href="./index1.html">Генерація послідовності</a>
-        <a href="./index2.html">Вибір слова</a>
-        <a href="./index3.html">Генерація паролю</a>
-        <a href="./index4.html">Генерація набору паролів</a>
-      </div>
+  <div class="nav-container">
+    <div class="logo-container">
+      <svg class="logo" fill="#ffffff" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 width="100px" height="100px" viewBox="0 0 468.002 468.002"
+	 xml:space="preserve">
+<g>
+	<g>
+		<path d="M418.601,179.395h-126.68V46.088C291.921,20.675,271.245,0,245.831,0H49.401C23.987,0,3.312,20.675,3.312,46.088v196.431
+			c0,25.412,20.676,46.087,46.09,46.087h126.68v133.309c0,25.413,20.675,46.088,46.088,46.088h196.431
+			c25.414,0,46.09-20.675,46.09-46.088V225.483C464.688,200.07,444.015,179.395,418.601,179.395z M49.401,276.605
+			c-18.797,0-34.09-15.291-34.09-34.087V46.088C15.312,27.292,30.604,12,49.401,12h196.43c18.797,0,34.09,15.292,34.09,34.088
+			v133.307h-57.751c-25.413,0-46.088,20.675-46.088,46.088v51.123H49.401L49.401,276.605z M452.688,421.914
+			c0,18.796-15.291,34.088-34.088,34.088H222.169c-18.796,0-34.088-15.292-34.088-34.088V225.483
+			c0-18.796,15.292-34.088,34.088-34.088h196.431c18.797,0,34.09,15.292,34.09,34.088v196.431H452.688z"/>
+		<path d="M147.356,127.454c-11.522,0-20.865,9.343-20.865,20.87c0,11.524,9.343,20.867,20.865,20.867
+			c11.527,0,20.869-9.343,20.869-20.867C168.227,136.797,158.884,127.454,147.356,127.454z"/>
+		<path d="M224.442,89.684c11.525,0,20.873-9.343,20.873-20.868s-9.348-20.869-20.873-20.869c-11.52,0-20.866,9.343-20.866,20.869
+			C203.577,80.341,212.923,89.684,224.442,89.684z"/>
+		<circle cx="70.417" cy="68.815" r="20.868"/>
+		<circle cx="70.417" cy="224.842" r="20.868"/>
+		<circle cx="320.644" cy="323.864" r="20.868"/>
+		<path d="M397.728,223.489c-11.52,0-20.869,9.343-20.869,20.869s9.35,20.868,20.869,20.868c11.527,0,20.871-9.343,20.871-20.868
+			S409.255,223.489,397.728,223.489z"/>
+		<circle cx="243.702" cy="400.384" r="20.867"/>
+	</g>
+</g>
+</svg>
+    <span class="logo-text">Randomizer app</span>
+  </div>
       <div class="auth-links">
         <a href="#">Зареєструватися</a>
         <a href="#">Авторизуватися</a>
       </div>
-    </div>
-  </nav>
-
-  <div class="container">
-    <h1>Генератор випадкових чисел</h1>
-    <div>
-      <label for="min">min:</label>
-      <input type="number" id="min" min="0" />
-    </div>
-    <div>
-      <label for="max">max:</label>
-      <input type="number" id="max" min="0" />
-    </div>
-    <button onclick="Random.getRandomNumber()">Згенерувати</button>
-    <div id="result"></div>
-    <div id="requests" class="previous-requests-container">
-      <p class="previous-text">Попередні запити: </p>
-      <div class="requests-wrapper random-requests">
-      </div>
-    </div>
   </div>
-
+  <div class="main-links">
+    <a href="./index.html">Випадкове число</a>
+    <a href="./index1.html">Генерація послідовності</a>
+    <a href="./index2.html">Вибір слова</a>
+    <a href="./index3.html">Генерація паролю</a>
+    <a href="./index4.html">Генерація набору паролів</a>
+  </div>
+  <div class="container">
+    <div class="interface">
+        <h1>Генератор випадкових чисел</h1>
+        <div class="input-group">
+            <label for="min">min:</label>
+            <input type="number" id="min" min="0" />
+        </div>
+        <div class="input-group">
+            <label for="max">max:</label>
+            <input type="number" id="max" min="0" />
+        </div>
+        <button onclick="Random.getRandomNumber()">Згенерувати</button>
+    </div>
+    <div id="result" class="result"></div>
+</div>
+<div id="requests" class="previous-requests-container">
+  <p class="previous-text">Попередні запити: </p>
+  <div class="requests-wrapper random-requests">
+  </div>
+</div>
   <script src="./scripts/script.js"></script>
 </body>
 

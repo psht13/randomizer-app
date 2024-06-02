@@ -15,8 +15,13 @@ const {
   random,
   registration,
   login,
+  getQueryHistory,
+  getAllRequests,
+  getStatistics,
+  getRandomQueryFromHistory,
 } = require('./apiHandler');
 
+const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const { env } = require('process');
@@ -47,7 +52,7 @@ app.use(express.json());
 
 app.use(
   session({
-    secret: process.env.SECRET,
+    secret: 'your_session_secret',
     resave: false,
     saveUninitialized: true,
   })
@@ -64,7 +69,13 @@ app.get('/random', random);
 app.post('/registration', registration);
 app.post('/login', login);
 app.use('/auth', require('./authRoutes'));
+app.post('/queryHistory', getQueryHistory);
+app.get('/allRequests', getAllRequests);
+app.get('/statistics', getStatistics);
+app.post('/getRandomQueryFromHistory', getRandomQueryFromHistory);
 //================================================================
+
+connectToDatabase();
 
 app.get('*', (req, res) => {
   const filePath = join(__dirname, 'public', req.url);
@@ -85,8 +96,8 @@ app.get('*', (req, res) => {
   });
 });
 
-connectToDatabase();
-//===============================================================
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`);
 });
+
+//===============================================================

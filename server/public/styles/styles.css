@@ -1,16 +1,157 @@
 body {
-  font-family: 'Raleway', sans-serif;
+  font-family: "Nunito", sans-serif;
   margin: 0;
   padding: 0;
+  font-weight: 500;
+  font-style: normal;
+  font-optical-sizing: auto;
 }
 
 .container {
-  max-width: 400px;
+  display: flex;
+  align-items: center;
+  width: 70%;
+  height: 50vh;
   margin: 50px auto;
-  text-align: center;
+  padding: 20px;
   border: 1px solid #cdcdcd;
-  width: 35%;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background-color: #f1f1f1;
+}
+
+.interface {
+  width: 50%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+}
+.interface button{
+  height: 50px;
+  font-size: 1.2em;
+  border-radius: 10px;
+}
+
+.input-group{
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.input-group-1{
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.input-group-1 label{
+  width: 100px;
+  margin-right: 10px;
+}
+
+.input-group-1 input{
+  height: 40px; 
+  font-size: 18px; 
+  padding: 5px; 
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+.input-group label{
+  margin-right: 10px;
+  width: 50px;
+}
+
+.input-group input{
+  height: 40px; 
+  font-size: 18px; 
+  padding: 5px; 
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+.interface h1 {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.result {
+  font-size: 12em;
+  display: flex;
+  width: 50%;
+  text-align: right;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  border: #333 1px solid;
+  border-radius: 10px;
+  height: 300px;
+  align-items: flex-start;
+}
+
+.result-order {
+  height: 150px;
+  overflow-y: auto;
+  font-size: 1.5em;
+  display: flex;
+  width: 50%;
+  text-align: right;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  border: #333 1px solid;
+  border-radius: 10px;
+  align-items: flex-start;
+  padding-right: 5px;
+}
+
+.result-text {
+  font-size: 2em;
+  display: flex;
+  align-items: flex-start;
+  width: 50%;
+  text-align: right;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  border: #333 1px solid;
+  border-radius: 10px;
+  height: 130px;
+}
+
+.result-password {
+  font-size: 2em;
+  align-items: flex-start;
+  display: flex;
+  overflow-y: auto;
+  width: 50%;
+  text-align: right;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  border: #333 1px solid;
+  border-radius: 10px;
+  height: 150px;
+}
+
+.result-passwords {
+  height: 340px;
+  overflow-y: auto;
+  font-size: 2em;
+  display: flex;
+  width: 50%;
+  text-align: right;
+  font-weight: bold;
+  justify-content: center;
+  border: #333 1px solid;
+  border-radius: 10px;
+  align-items: flex-start;
   padding-bottom: 10px;
+}
+
+.input-group {
+  margin-bottom: 10px;
 }
 
 /*================================================================*/
@@ -48,10 +189,6 @@ body {
 }
 /*================================================================*/
 
-.container h1 {
-  background-color: #cdcdcd;
-  margin: 0;
-}
 
 input[type='number'],
 button {
@@ -71,28 +208,39 @@ button:hover {
   background-color: #0056b3;
 }
 
-.navigation {
+.nav-container {
   background-color: #333;
+  height: 1vh;
   color: #fff;
   padding: 20px 0;
-  height: 5vh;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.nav-container {
   max-width: 100%;
   margin: 0 auto;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
-  height: 5vh;
 }
+.logo-container{
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  margin-left: 30px;
+}
+.logo-container span{
+  font-family: "Titillium Web", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 33px;
+}
+.logo {
+  height: 40px;
+  width: 50px;
+  margin-right: 10px;
+}
+
 
 .nav-container a {
   color: #fff;
   text-decoration: none;
-  margin: 0 10px;
   border-bottom: 1px solid transparent;
   transition: border-bottom-color 0.3s;
 }
@@ -104,37 +252,175 @@ button:hover {
 .main-links {
   display: flex;
   align-items: center;
-  margin-left: auto;
-  margin-top: 10px;
-  height: 100%;
+  height: 35px;
+  background-color: black;
+  justify-content: center;
 }
 
 .main-links a {
+  font-size: 1.2em;
   color: #fff;
   text-decoration: none;
   margin: 0 13px;
+  border-bottom: 1px solid transparent;
   transition: color 0.3s, border-bottom-color 0.3s;
+}
+
+.exit{
+  margin-left: 28px;
 }
 
 .auth-links {
   display: inline-flex;
   align-items: center;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.2em;
+  margin-left: auto;
+  margin-right: 20px;
 }
+
+.registration{
+  padding-right: 28px;
+  border-right: 1px solid #fff;
+}
+
+.authorization{
+  margin-left: 28px;
+}
+
+.span-username{
+  border-right: 1px solid #fff;
+  padding-right: 28px;
+}
+
 
 .auth-links a {
   color: #fff;
   text-decoration: none;
-  margin: 0 8px;
-  font-size: 0.7em;
   transition: color 0.3s, border-bottom-color 0.3s;
-}
-
-.auth-links {
-  margin-left: auto;
 }
 
 .main-links a:hover,
 .auth-links a:hover {
   color: #ddd;
   border-bottom-color: #ddd;
+}
+
+#text{
+  resize: none;
+}
+
+/*================================================================*/
+.auth-body {
+  font-family: 'Nunito', sans-serif;
+  background-color: #f0f2f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.register-container,
+.login-container {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.register-container h1,
+.login-container h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333333;
+}
+
+.register-container .form-group,
+.login-container .form-group {
+  margin-bottom: 20px;
+  text-align: left;
+  width: 100%;
+}
+
+.register-container .form-group label,
+.login-container .form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555555;
+}
+
+.register-container .form-group input,
+.login-container .form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.register-container button[type="submit"],
+.login-container button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.register-container button[type="submit"]:hover,
+.login-container button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.register-container a,
+.login-container a {
+  text-decoration: none;
+}
+
+.register-container a button,
+.login-container a button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #ffffff;
+  color: #757575;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.register-container a button:hover,
+.login-container a button:hover {
+  background-color: #f0f0f0;
+}
+
+.register-container a button img,
+.login-container a button img {
+  margin-right: 10px;
+}
+
+.register-container #result,
+.login-container #result {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #d9534f;
 }
