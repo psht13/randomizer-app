@@ -387,11 +387,10 @@ const registration = async (req, res) => {
         .json({ message: 'Password must be at least 8 characters long' });
     }
 
-    const candidateU = await usersCollection.findOne({ username });
     const candidateE = await usersCollection.findOne({ email });
 
-    if (candidateU || candidateE) {
-      return res.status(400).json({ message: 'Username/Email already exists' });
+    if (candidateE) {
+      return res.status(400).json({ message: 'Email already exists' });
     }
 
     const hashPassword = bcrypt.hashSync(password, 4);
@@ -400,8 +399,9 @@ const registration = async (req, res) => {
 
     // Генерація токену
     const token = generateAuthToken(result.insertedId, username);
+    const user_id = result.insertedId;
 
-    return res.json({ message: 'Success', token });
+    return res.json({ message: 'Success', token, user_id});
   } catch (e) {
     console.error(e);
     res.status(400).json({ message: 'Registration error' });
@@ -412,19 +412,19 @@ const login = async (req, res) => {
   try {
     const db = await connectToDatabase();
     const usersCollection = db.collection('users');
-    const { username, password } = req.body;
-    const candidateU = await usersCollection.findOne({ username });
+    const { email, password } = req.body;
+    const candidateU = await usersCollection.findOne({ email });
     if (!candidateU) {
       return res
         .status(400)
-        .json({ message: 'Користувач ${username} не знайдений' });
+        .json({ message: 'Користувач не знайдений' });
     }
     const validPassword = bcrypt.compareSync(password, candidateU.password);
     if (!validPassword) {
       return res.status(400).json({ message: 'Не правильний пароль' });
     }
     const token = generateAuthToken(candidateU._id, candidateU.username);
-    return res.json({ token: token, user_id: candidateU._id });
+    return res.json({ token: token, user_id: candidateU._id, user:candidateU.username });
   } catch (e) {
     console.log(e);
     res.status(400).json({ message: 'Login error' });
