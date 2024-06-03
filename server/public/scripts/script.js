@@ -70,8 +70,7 @@ class Random {
       fetch(`/random?min=${min}&max=${max}&user_id=${userId}`)
         .then(response => response.text())
         .then(data => {
-          document.getElementById('result').innerText =
-            data;
+          document.getElementById('result').innerText = data;
           const markup = `<div class="request">${data}</div>`;
           request.insertAdjacentHTML('afterbegin', markup);
 
@@ -104,25 +103,33 @@ class Random {
     const userId = localStorage.getItem('user_id');
 
     if (isNaN(min) || isNaN(max)) {
-      result.innerHTML = 'Будь ласка, введіть коректні значення для min та max.';
+      result.innerHTML =
+        'Будь ласка, введіть коректні значення для min та max.';
     } else if (min >= max) {
       result.innerHTML = 'Значення max повинно бути більшим за значення min.';
     } else if (quantity < 1) {
       result.innerHTML = 'Значення кількості має бути більшим за одиницю.';
     } else {
-      fetch(`/sequence?quantity=${quantity}&min=${min}&max=${max}&user_id=${userId}`) // Append user_id to the URL
+      fetch(
+        `/sequence?quantity=${quantity}&min=${min}&max=${max}&user_id=${userId}`
+      ) // Append user_id to the URL
         .then(response => response.text())
         .then(data => {
-          result.innerHTML =
-            'Згенерована послідовність: <br>' + data.slice(0, -2);
+          result.innerHTML = data.slice(0, -2);
 
-          const markup = `<div class="request">${data.slice(0, -2) + ';'}</div>`;
+          const markup = `<div class="request">${
+            data.slice(0, -2) + ';'
+          }</div>`;
           requestWrapper.insertAdjacentHTML('afterbegin', markup);
 
-          const savedRequests = JSON.parse(localStorage.getItem('sequence-requests')) || [];
+          const savedRequests =
+            JSON.parse(localStorage.getItem('sequence-requests')) || [];
           savedRequests.push(data);
           savedRequests.splice(0, savedRequests.length - 20);
-          localStorage.setItem('sequence-requests', JSON.stringify(savedRequests));
+          localStorage.setItem(
+            'sequence-requests',
+            JSON.stringify(savedRequests)
+          );
         })
         .catch(error => {
           console.error('Error:', error);
@@ -144,7 +151,7 @@ class Random {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ text: text })
+      body: JSON.stringify({ text: text }),
     })
       .then(response => {
         if (!response.ok) {
@@ -156,7 +163,7 @@ class Random {
         if (data.error) {
           result.innerHTML = data.error;
         } else {
-          result.innerHTML = 'Випадкове слово: ' + data.randomWord;
+          result.innerHTML = data.randomWord;
 
           // Додавання випадкового слова до запитів
           const markup = `<div class="request">${data.randomWord}</div>`;
@@ -206,7 +213,7 @@ class Random {
           if (data.error) {
             result.innerHTML = data.error;
           } else {
-            result.innerHTML = 'Згенерований пароль: ' + data.password;
+            result.innerHTML = data.password;
 
             // Додавання згенерованого пароля до запитів
             const markup = `<div class="request">${data.password}</div>`;
@@ -268,9 +275,7 @@ class Random {
           if (data.error) {
             result.innerHTML = data.error;
           } else {
-            result.innerHTML =
-              'Згенерований набір паролів: <br>' +
-              data.passwordSet.join('<br>');
+            result.innerHTML = data.passwordSet.join('<br>');
 
             // Додавання згенерованого набору паролів до запитів
             const markup = data.passwordSet
@@ -346,7 +351,7 @@ class Auth {
       if (response.ok) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('username', username);
-        localStorage.setItem('user_id', data.user_id)
+        localStorage.setItem('user_id', data.user_id);
         document.getElementById('result').innerText = 'Реєстрація успішна';
         window.location.href = '/index.html';
       } else {
@@ -436,6 +441,6 @@ document.addEventListener('DOMContentLoaded', () => {
 function goToPage(selectObject) {
   var url = selectObject.value;
   if (url) {
-      window.location.href = url;
+    window.location.href = url;
   }
 }
