@@ -8,58 +8,43 @@
   <title>Генератор випадкових чисел</title>
   <link rel="stylesheet" href="./styles/table.css" />
   <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
-    rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
-    rel="stylesheet">
 </head>
-
 <body>
   <div id="container">
-    <a href="./index.html" class="exit-btn">На головну</a>
     <div id="controls">
-      <div id="random-query-display" class="divs">
-        <h2>Випадковий запит</h2>
-        <button id="random-query-button" onclick="getRandomQueryFromHistory()">Випадковий запит</button>
-        <div id="random-query-display-result"></div>
+      <div id="random-query-display">
+        <h2>Random Query</h2>
+        <button id="random-query-button" onclick="getRandomQueryFromHistory()">Show Random Query</button>
+	    <div id="random-query-display-result"></div>
       </div>
-      <div id="statistics" class="divs">
-        <h2>Статистика</h2>
-        <button onclick="getStatistics()">Показати статистику</button>
-        <div id="statistics-result"></div>
+      <div id="statistics">
+        <h2>Statistics</h2>
+        <button onclick="getStatistics()">Show Statistics</button>
+	    <div id="statistics-result"></div>
       </div>
-    </div>
-    <div id="history">
-      <h2>Історія запитів</h2>
-      <div id="history-result"></div>
-      <div id="filters">
-        <div class="options">
-          <label for="queryTypeFilter">Тип запиту:</label>
-          <select id="queryTypeFilter">
-            <option value="all">Всі</option>
-            <option value="sequence">Послідовність</option>
-            <option value="random">Випадкове Число</option>
-            <option value="randomWord">Випадкове Слово</option>
-            <option value="generatePassword">Пароль</option>
-            <option value="generatePasswords">Набір Паролів</option>
-          </select>
-          <label for="dateFilter">Date:</label>
-          <select id="dateFilter">
-            <option value="all">За весь час</option>
-            <option value="lastHour">За минулу годину</option>
-            <option value="lastDay">За минулий день</option>
-            <option value="lastWeek">За минулий тиждень</option>
-          </select>
-        </div>
-        <div class="data-container" id="data-container"></div>
+      <div id="history">
+        <h2>Query History</h2>
+	    <div id="history-result"></div>
+        <div id="filters">
+            <label for="queryTypeFilter">Query Type:</label>
+            <select id="queryTypeFilter">
+              <option value="all">All</option>
+              <option value="sequence">Sequence</option>
+              <option value="random">Random-Number</option>
+              <option value="randomWord">Random Word</option>
+              <option value="generatePassword">Password generation</option>
+              <option value="generatePasswords">Passwords generation</option>
+            </select>
+            <label for="dateFilter">Date:</label>
+            <select id="dateFilter">
+              <option value="all">All Time</option>
+              <option value="lastHour">Last Hour</option>
+              <option value="lastDay">Last Day</option>
+              <option value="lastWeek">Last Week</option>
+            </select>
+            <div class="data-container" id="data-container"></div>
       </div>
-    </div>
-    <script src="./scripts/client.js"></script>
+  </div>
+  <script src="./scripts/client.js"></script>
 </body>
-
 </html>

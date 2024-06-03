@@ -1,20 +1,16 @@
 body {
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   margin: 0;
   padding: 0;
   font-weight: 500;
   font-style: normal;
   font-optical-sizing: auto;
 }
-.container1 {
-  width: 1200px;
-  margin-right: auto;
-  margin-left: auto;
-}
+
 .container {
   display: flex;
   align-items: center;
-  width: 1200px;
+  width: 70%;
   height: 50vh;
   margin: 50px auto;
   padding: 20px;
@@ -33,44 +29,44 @@ body {
   height: 100%;
   justify-content: center;
 }
-.interface button {
+.interface button{
   height: 50px;
   font-size: 1.2em;
   border-radius: 10px;
 }
 
-.input-group {
+.input-group{
   display: flex;
   align-items: center;
   margin-bottom: 20px;
 }
-.input-group-1 {
+.input-group-1{
   display: flex;
   align-items: center;
   margin-bottom: 20px;
 }
-.input-group-1 label {
+.input-group-1 label{
   width: 100px;
   margin-right: 10px;
 }
 
-.input-group-1 input {
-  height: 40px;
-  font-size: 18px;
-  padding: 5px;
+.input-group-1 input{
+  height: 40px; 
+  font-size: 18px; 
+  padding: 5px; 
   box-sizing: border-box;
   border-radius: 10px;
 }
 
-.input-group label {
+.input-group label{
   margin-right: 10px;
   width: 50px;
 }
 
-.input-group input {
-  height: 40px;
-  font-size: 18px;
-  padding: 5px;
+.input-group input{
+  height: 40px; 
+  font-size: 18px; 
+  padding: 5px; 
   box-sizing: border-box;
   border-radius: 10px;
 }
@@ -193,6 +189,7 @@ body {
 }
 /*================================================================*/
 
+
 input[type='number'],
 button {
   margin-top: 10px;
@@ -222,14 +219,14 @@ button:hover {
   justify-content: left;
   align-items: center;
 }
-.logo-container {
+.logo-container{
   align-items: center;
   justify-content: center;
   display: flex;
   margin-left: 30px;
 }
-.logo-container span {
-  font-family: 'Titillium Web', sans-serif;
+.logo-container span{
+  font-family: "Titillium Web", sans-serif;
   font-weight: 700;
   font-style: normal;
   font-size: 33px;
@@ -239,6 +236,7 @@ button:hover {
   width: 50px;
   margin-right: 10px;
 }
+
 
 .nav-container a {
   color: #fff;
@@ -268,7 +266,7 @@ button:hover {
   transition: color 0.3s, border-bottom-color 0.3s;
 }
 
-.exit {
+.exit{
   margin-left: 28px;
 }
 
@@ -282,19 +280,20 @@ button:hover {
   margin-right: 20px;
 }
 
-.registration {
+.registration{
   padding-right: 28px;
   border-right: 1px solid #fff;
 }
 
-.authorization {
+.authorization{
   margin-left: 28px;
 }
 
-.span-username {
+.span-username{
   border-right: 1px solid #fff;
   padding-right: 28px;
 }
+
 
 .auth-links a {
   color: #fff;
@@ -308,7 +307,7 @@ button:hover {
   border-bottom-color: #ddd;
 }
 
-#text {
+#text{
   resize: none;
 }
 
@@ -370,8 +369,8 @@ button:hover {
   font-size: 16px;
 }
 
-.register-container button[type='submit'],
-.login-container button[type='submit'] {
+.register-container button[type="submit"],
+.login-container button[type="submit"] {
   width: 100%;
   padding: 12px;
   border: none;
@@ -382,8 +381,8 @@ button:hover {
   cursor: pointer;
 }
 
-.register-container button[type='submit']:hover,
-.login-container button[type='submit']:hover {
+.register-container button[type="submit"]:hover,
+.login-container button[type="submit"]:hover {
   background-color: #0056b3;
 }
 
