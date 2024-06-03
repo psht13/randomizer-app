@@ -169,17 +169,11 @@ body {
   display: flex;
   height: 18px;
   flex-wrap: wrap;
-  max-width: 368px;
   overflow: hidden;
   flex-direction: row;
   align-items: center;
   justify-content: left;
   gap: 8px;
-}
-
-.requests-wrapper > :first-child {
-  background-color: #007bff;
-  color: #fff;
 }
 
 .previous-text {
