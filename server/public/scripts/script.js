@@ -184,7 +184,7 @@ class Random {
     let result = document.getElementById('result');
     const userId = localStorage.getItem('user_id');
 
-    if (isNaN(length) || length <= 0) {
+    if (isNaN(length) || length <= 0 || length > 128) {
       result.innerHTML = 'Будь ласка, введіть коректну довжину пароля.';
     } else {
       fetch(`/generate-password?user_id=${userId}`, {
@@ -239,7 +239,13 @@ class Random {
     let result = document.getElementById('result');
     const userId = localStorage.getItem('user_id');
 
-    if (isNaN(quantity) || isNaN(length) || quantity <= 0 || length <= 0) {
+    if (
+      isNaN(quantity) ||
+      isNaN(length) ||
+      quantity <= 0 ||
+      length <= 0 ||
+      length > 128
+    ) {
       result.innerHTML =
         'Будь ласка, введіть коректні значення для кількості та довжини паролів.';
     } else {

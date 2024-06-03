@@ -129,7 +129,7 @@ const generatePasswords = async (req, res) => {
   const { quantity, length } = req.body;
   const userId = req.query.user_id;
   const charset =
-    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-+=';
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let passwordSet = [];
 
   if (isNaN(quantity) || isNaN(length) || quantity <= 0 || length <= 0) {
@@ -182,7 +182,7 @@ const generatePassword = async (req, res) => {
   const { length } = req.body;
   const userId = req.query.user_id;
   const charset =
-    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-+=';
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
   if (isNaN(length) || length <= 0) {
     res
