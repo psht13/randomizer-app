@@ -129,10 +129,16 @@ const generatePasswords = async (req, res) => {
   const { quantity, length } = req.body;
   const userId = req.query.user_id;
   const charset =
-    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-+=';
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let passwordSet = [];
 
-  if (isNaN(quantity) || isNaN(length) || quantity <= 0 || length <= 0) {
+  if (
+    isNaN(quantity) ||
+    isNaN(length) ||
+    quantity <= 0 ||
+    length <= 0 ||
+    length > 128
+  ) {
     res.status(400).json({
       error:
         'Будь ласка, введіть коректні значення для кількості та довжини паролів.',
@@ -146,10 +152,11 @@ const generatePasswords = async (req, res) => {
       }
       passwordSet.push(password);
     }
+
     if (userId) {
       try {
         if (!ObjectId.isValid(userId)) {
-          res.json({ passwordSet: passwordSet });
+          res.send(result);
           return;
         }
         const db = await connectToDatabase();
@@ -182,9 +189,9 @@ const generatePassword = async (req, res) => {
   const { length } = req.body;
   const userId = req.query.user_id;
   const charset =
-    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-+=';
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
-  if (isNaN(length) || length <= 0) {
+  if (isNaN(length) || length <= 0 || length > 128) {
     res
       .status(400)
       .json({ error: 'Будь ласка, введіть коректну довжину пароля.' });
@@ -198,7 +205,7 @@ const generatePassword = async (req, res) => {
     if (userId) {
       try {
         if (!ObjectId.isValid(userId)) {
-          res.json({ password: password });
+          res.send(result);
           return;
         }
 
@@ -338,7 +345,7 @@ const random = async (req, res) => {
     if (userId) {
       try {
         if (!ObjectId.isValid(userId)) {
-          res.send('' + randomNumber);
+          res.send(result);
           return;
         }
         const db = await connectToDatabase();
@@ -387,10 +394,11 @@ const registration = async (req, res) => {
         .json({ message: 'Password must be at least 8 characters long' });
     }
 
+    const candidateU = await usersCollection.findOne({ username });
     const candidateE = await usersCollection.findOne({ email });
 
-    if (candidateE) {
-      return res.status(400).json({ message: 'Email already exists' });
+    if (candidateU || candidateE) {
+      return res.status(400).json({ message: 'Username/Email already exists' });
     }
 
     const hashPassword = bcrypt.hashSync(password, 4);
@@ -399,9 +407,8 @@ const registration = async (req, res) => {
 
     // Генерація токену
     const token = generateAuthToken(result.insertedId, username);
-    const user_id = result.insertedId;
 
-    return res.json({ message: 'Success', token, user_id});
+    return res.json({ message: 'Success', token });
   } catch (e) {
     console.error(e);
     res.status(400).json({ message: 'Registration error' });
@@ -412,19 +419,19 @@ const login = async (req, res) => {
   try {
     const db = await connectToDatabase();
     const usersCollection = db.collection('users');
-    const { email, password } = req.body;
-    const candidateU = await usersCollection.findOne({ email });
+    const { username, password } = req.body;
+    const candidateU = await usersCollection.findOne({ username });
     if (!candidateU) {
       return res
         .status(400)
-        .json({ message: 'Користувач не знайдений' });
+        .json({ message: 'Користувач ${username} не знайдений' });
     }
     const validPassword = bcrypt.compareSync(password, candidateU.password);
     if (!validPassword) {
       return res.status(400).json({ message: 'Не правильний пароль' });
     }
     const token = generateAuthToken(candidateU._id, candidateU.username);
-    return res.json({ token: token, user_id: candidateU._id, user:candidateU.username });
+    return res.json({ token: token, user_id: candidateU._id });
   } catch (e) {
     console.log(e);
     res.status(400).json({ message: 'Login error' });

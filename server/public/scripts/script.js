@@ -340,7 +340,6 @@ class Auth {
       if (response.ok) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('username', username);
-        localStorage.setItem('user_id', data.user_id)
         document.getElementById('result').innerText = 'Реєстрація успішна';
         window.location.href = '/index.html';
       } else {
@@ -353,10 +352,10 @@ class Auth {
   }
 
   static async login() {
-    const email = document.getElementById('email').value;
+    const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    if (!email || !password) {
+    if (!username || !password) {
       document.getElementById('result').innerText =
         'Будь ласка, заповніть всі поля.';
       return;
@@ -368,14 +367,14 @@ class Auth {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username, password }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
         localStorage.setItem('token', data.token);
-        localStorage.setItem('username', data.username);
+        localStorage.setItem('username', username);
         localStorage.setItem('user_id', data.user_id);
         document.getElementById('result').innerText = 'Вхід успішний';
         window.location.href = '/index.html';
