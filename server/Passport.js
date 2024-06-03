@@ -146,7 +146,7 @@ async (accessToken, refreshToken, profile, done) => {
         { email: profile.emails[0].value },
         { $set: { githubId: profile.id, } }
       );
-      user.facebookId = profile.id;
+      user.githubId = profile.id;
     }
   }
 
