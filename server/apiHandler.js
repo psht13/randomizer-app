@@ -424,7 +424,7 @@ const login = async (req, res) => {
       return res.status(400).json({ message: 'Не правильний пароль' });
     }
     const token = generateAuthToken(candidateU._id, candidateU.username);
-    return res.json({ token: token, user_id: candidateU._id, user:candidateU.username });
+    return res.json({ token: token, user_id: candidateU._id, username:candidateU.username });
   } catch (e) {
     console.log(e);
     res.status(400).json({ message: 'Login error' });
