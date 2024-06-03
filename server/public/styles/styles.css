@@ -99,14 +99,14 @@ body {
   overflow-y: auto;
   font-size: 1.5em;
   display: flex;
+
   width: 50%;
-  text-align: right;
+  text-align: center;
   font-weight: bold;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   border: #333 1px solid;
   border-radius: 10px;
-  align-items: flex-start;
   padding-right: 5px;
 }
 
