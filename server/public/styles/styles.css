@@ -177,10 +177,6 @@ body {
   gap: 8px;
 }
 
-.requests-wrapper > :first-child {
-  color: #007bff;
-}
-
 .previous-text {
   padding: 10px;
   margin: 0;
