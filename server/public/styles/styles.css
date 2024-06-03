@@ -169,7 +169,6 @@ body {
   display: flex;
   height: 18px;
   flex-wrap: wrap;
-
   overflow: hidden;
   flex-direction: row;
   align-items: center;
