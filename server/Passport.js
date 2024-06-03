@@ -1,7 +1,7 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
-const GitHubStrategy = require('passport-github').Strategy;
+const GitHubStrategy = require('passport-github2').Strategy;
 const jwt = require('jsonwebtoken');
 const connectToDatabase = require('./db'); // ваш файл для підключення до бази даних
 const { secret } = require('./models/ConfigKey');
@@ -119,44 +119,50 @@ passport.use(
 passport.use(new GitHubStrategy({
   clientID: process.env.CLIENT_ID_G,
   clientSecret: process.env.CLIENT_SECRET_G,
-  callbackURL: "https://randomizer-app-production.up.railway.app/auth/github/callback"
+  callbackURL: 'https://randomizer-app-production.up.railway.app/auth/github/callback',
+  scope: ['user:email']
 },
 async (accessToken, refreshToken, profile, done) => {
-  const db = await connectToDatabase();
-  const usersCollection = db.collection('users');
+  try {
+    const db = await connectToDatabase();
+    const usersCollection = db.collection('users');
 
-  let user = await usersCollection.findOne({ githubId: profile.id });
-
-  if (!user) {
-    user = await usersCollection.findOne({
-      email: profile.emails[0].value,
-    });
+    let user = await usersCollection.findOne({ githubId: profile.id });
 
     if (!user) {
-      const newUser = {
-        githubId: profile.id,
-        username: profile.displayName,
-        email: profile.emails[0].value,
-      };
-      const result = await usersCollection.insertOne(newUser);
-      user = { ...newUser, _id: result.insertedId };
-    } else {
-      // Якщо користувач знайдений за email, оновимо його facebookId
-      await usersCollection.updateOne(
-        { email: profile.emails[0].value },
-        { $set: { githubId: profile.id, } }
-      );
-      user.githubId = profile.id;
+      const email = profile.emails && profile.emails[0] && profile.emails[0].value;
+      if (email) {
+        user = await usersCollection.findOne({ email });
+        if (!user) {
+          const newUser = {
+            githubId: profile.id,
+            username: profile.displayName,
+            email: email,
+          };
+          const result = await usersCollection.insertOne(newUser);
+          user = { ...newUser, _id: result.insertedId };
+        } else {
+          await usersCollection.updateOne(
+            { email },
+            { $set: { githubId: profile.id } }
+          );
+          user.githubId = profile.id;
+        }
+      } else {
+        return done(new Error('Email not available from GitHub profile'));
+      }
     }
+
+    const tokenPayload = {
+      id: user._id,
+      username: user.username,
+    };
+    const token = jwt.sign(tokenPayload, secret, { expiresIn: '24h' });
+
+    done(null, { ...user, token });
+  } catch (error) {
+    done(error);
   }
-
-  const tokenPayload = {
-    id: user._id,
-    username: user.username,
-  };
-  const token = jwt.sign(tokenPayload, secret, { expiresIn: '24h' });
-
-  done(null, { ...user, token });
 }));
 
 passport.serializeUser((user, done) => {
