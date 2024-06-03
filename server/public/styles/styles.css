@@ -169,7 +169,7 @@ body {
   display: flex;
   height: 18px;
   flex-wrap: wrap;
-  max-width: 368px;
+
   overflow: hidden;
   flex-direction: row;
   align-items: center;
@@ -178,8 +178,7 @@ body {
 }
 
 .requests-wrapper > :first-child {
-  background-color: #007bff;
-  color: #fff;
+  color: #007bff;
 }
 
 .previous-text {
