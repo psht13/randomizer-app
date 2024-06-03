@@ -123,7 +123,7 @@ function displayData(data) {
     const requestDate = new Date(item.request_time).toLocaleString();
 
     itemDiv.innerHTML = `
-        <p><strong>Request Time:</strong> ${requestDate}, <strong>Query Type:</strong> ${
+        <p><strong>Час запиту:</strong> ${requestDate}, <strong>Тип запиту:</strong> ${
       item.queryType
     }</p>
         <div class="data-details" style="display: none;">
@@ -147,32 +147,32 @@ function getQueryDetailsHTML(item) {
   switch (item.queryType) {
     case 'sequence':
       detailsHTML = `
-          <p><strong>Input:</strong> Quantity - ${item.input.quantity}, Min: ${item.input.min}, Max: ${item.input.max}</p>
-          <p><strong>Output:</strong> ${item.output}</p>
+          <p><strong>Ввід:</strong> Кількість - ${item.input.quantity}, Min: ${item.input.min}, Max: ${item.input.max}</p>
+          <p><strong>Вивід:</strong> ${item.output}</p>
         `;
       break;
     case 'random':
       detailsHTML = `
-          <p><strong>Input:</strong> Min: ${item.input.min}, Max: ${item.input.max}</p>
-          <p><strong>Output:</strong> ${item.output}</p>
+          <p><strong>Ввід:</strong> Min: ${item.input.min}, Max: ${item.input.max}</p>
+          <p><strong>Вивід:</strong> ${item.output}</p>
         `;
       break;
     case 'randomWord':
       detailsHTML = `
-          <p><strong>Input:</strong> Text: ${item.input.text}</p>
-          <p><strong>Output:</strong> ${item.output}</p>
+          <p><strong>Ввід:</strong> Text: ${item.input.text}</p>
+          <p><strong>Вивід:</strong> ${item.output}</p>
         `;
       break;
     case 'generatePassword':
       detailsHTML = `
-          <p><strong>Input:</strong> Length: ${item.input.length}</p>
-          <p><strong>Output:</strong> ${item.output}</p>
+          <p><strong>Ввід:</strong> Довжина: ${item.input.length}</p>
+          <p><strong>Вивід:</strong> ${item.output}</p>
         `;
       break;
     case 'generatePasswords':
       detailsHTML = `
-          <p><strong>Input:</strong> Quantity: ${item.input.quantity}, Length: ${item.input.length}</p>
-          <p><strong>Output:</strong> ${item.output.join(', <br><br>')}</p>
+          <p><strong>Ввід:</strong> Кількість: ${item.input.quantity}, Довжина: ${item.input.length}</p>
+          <p><strong>Вивід:</strong> ${item.output.join(', <br><br>')}</p>
         `;
       break;
     default:

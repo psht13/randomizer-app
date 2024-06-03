@@ -35,4 +35,21 @@ router.get('/facebook/callback',
   }
 );
 
+router.get('/github',
+  passport.authenticate('github', { scope: ['user:email'] })
+);
+
+router.get('/github/callback',
+  passport.authenticate('github', { failureRedirect: '/login.html' }),
+  (req, res) => {
+    const { token, username, _id } = req.user;
+    res.send(`<script>
+                localStorage.setItem('token', '${token}');
+                localStorage.setItem('username', '${username}');
+                localStorage.setItem('user_id', '${_id}')
+                window.location.href = '/index.html';
+              </script>`);
+  }
+);
+
 module.exports = router;
