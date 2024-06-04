@@ -406,11 +406,13 @@ class Auth {
     if (token) {
       authLinks.innerHTML = `
         <a href="./table.html"  class="span-username">Привіт, ${username}</a>
+        <span class="delimiter">|</span>
         <a href="#" onclick="Auth.logout()"  class="exit">Вийти</a>
       `;
     } else {
       authLinks.innerHTML = `
         <a href="./register.html" class="registration">Зареєструватися</a>
+        <span class="delimiter">|</span>
         <a href="./login.html" class="authorization">Авторизуватися</a>
       `;
     }
